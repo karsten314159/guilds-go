@@ -4,7 +4,13 @@
 
 .App {
     text-align: center;
-    background: rgb(248, 244, 240),
+    background: rgb(248, 244, 240);
+    cursor: crosshair;
+}
+
+a {
+    color: black;
+    text-decoration: none;
 }
 
 /* https://time2hack.com/2018/04/css-tutorial-ripples-loading-animation-like-in-tinder/ */
