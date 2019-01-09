@@ -481,3 +481,491 @@
 [info] 
 [info] Project Console: https://console.firebase.google.com/project/heroes-1540337153226/overview
 [info] Hosting URL: https://heroes-1540337153226.firebaseapp.com
+[debug] [2019-01-09T00:35:49.672Z] ----------------------------------------------------------------------
+[debug] [2019-01-09T00:35:49.678Z] Command:       /home/unix/.nvm/versions/node/v6.11.4/bin/node /home/unix/.nvm/versions/node/v6.11.4/bin/firebase --debug deploy
+[debug] [2019-01-09T00:35:49.680Z] CLI Version:   6.1.1
+[debug] [2019-01-09T00:35:49.681Z] Platform:      linux
+[debug] [2019-01-09T00:35:49.681Z] Node Version:  v6.11.4
+[debug] [2019-01-09T00:35:49.683Z] Time:          Wed Jan 09 2019 01:35:49 GMT+0100 (STD)
+[debug] [2019-01-09T00:35:49.687Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-09T00:35:49.705Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-09T00:35:49.706Z] > authorizing via signed-in user
+[debug] [2019-01-09T00:35:49.707Z] [iam] checking project heroes-1540337153226 for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-01-09T00:35:49.711Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/heroes-1540337153226:testIamPermissions  
+
+[debug] [2019-01-09T00:35:51.372Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:35:51.378Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/heroes-1540337153226  
+ 
+[debug] [2019-01-09T00:35:51.674Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'heroes-1540337153226'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-01-09T00:35:51.697Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:35:52.341Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database heroes-1540337153226 is valid
+[debug] [2019-01-09T00:35:52.368Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions  
+
+[debug] [2019-01-09T00:35:53.812Z] <<< HTTP RESPONSE 200
+[info] i  hosting[heroes-1540337153226]: beginning deploy...
+[info] i  hosting[heroes-1540337153226]: found 14 files in build
+[debug] [2019-01-09T00:35:53.876Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-01-09T00:35:54.127Z] [hosting] hash cache [YnVpbGQ] stored for 14 files
+[debug] [2019-01-09T00:35:54.128Z] [hosting][hash queue][FINAL]
+[debug] [2019-01-09T00:35:54.129Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/603320a15e5d4fab:populateFiles  
+ <request body omitted>
+[debug] [2019-01-09T00:35:55.628Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:35:55.633Z] [hosting][populate queue][FINAL]
+[debug] [2019-01-09T00:35:55.637Z] [hosting] uploads queued: 0
+[debug] [2019-01-09T00:35:55.638Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[heroes-1540337153226]: file upload complete
+[debug] [2019-01-09T00:35:55.645Z] [hosting] deploy completed after 1825ms
+[info] i  database: releasing rules...
+[debug] [2019-01-09T00:35:55.771Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:35:56.393Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database heroes-1540337153226 released successfully
+[debug] [2019-01-09T00:35:56.401Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "heroes-1540337153226"
+    },
+    "site": "heroes-1540337153226",
+    "version": "sites/heroes-1540337153226/versions/603320a15e5d4fab"
+  }
+]
+[info] i  hosting[heroes-1540337153226]: finalizing version...
+[debug] [2019-01-09T00:35:56.442Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/603320a15e5d4fab?updateMask=status  
+
+[debug] [2019-01-09T00:35:57.615Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:35:57.621Z] [hosting] finalized version for heroes-1540337153226:
+[info] ✔  hosting[heroes-1540337153226]: version finalized
+[info] i  hosting[heroes-1540337153226]: releasing new version...
+[debug] [2019-01-09T00:35:57.651Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/releases?version_name=sites/heroes-1540337153226/versions/603320a15e5d4fab  
+
+[debug] [2019-01-09T00:35:58.680Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:35:58.686Z] [hosting] release:
+[info] ✔  hosting[heroes-1540337153226]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/heroes-1540337153226/overview
+[info] Hosting URL: https://heroes-1540337153226.firebaseapp.com
+[debug] [2019-01-09T00:52:28.790Z] ----------------------------------------------------------------------
+[debug] [2019-01-09T00:52:28.801Z] Command:       /home/unix/.nvm/versions/node/v6.11.4/bin/node /home/unix/.nvm/versions/node/v6.11.4/bin/firebase --debug deploy
+[debug] [2019-01-09T00:52:28.803Z] CLI Version:   6.1.1
+[debug] [2019-01-09T00:52:28.803Z] Platform:      linux
+[debug] [2019-01-09T00:52:28.804Z] Node Version:  v6.11.4
+[debug] [2019-01-09T00:52:28.807Z] Time:          Wed Jan 09 2019 01:52:28 GMT+0100 (STD)
+[debug] [2019-01-09T00:52:28.808Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-09T00:52:28.899Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-09T00:52:28.900Z] > authorizing via signed-in user
+[debug] [2019-01-09T00:52:28.901Z] [iam] checking project heroes-1540337153226 for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-01-09T00:52:28.908Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/heroes-1540337153226:testIamPermissions  
+
+[debug] [2019-01-09T00:52:30.014Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:52:30.021Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/heroes-1540337153226  
+ 
+[debug] [2019-01-09T00:52:30.476Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'heroes-1540337153226'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-01-09T00:52:30.509Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:52:32.127Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database heroes-1540337153226 is valid
+[debug] [2019-01-09T00:52:32.132Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions  
+
+[debug] [2019-01-09T00:52:33.752Z] <<< HTTP RESPONSE 200
+[info] i  hosting[heroes-1540337153226]: beginning deploy...
+[info] i  hosting[heroes-1540337153226]: found 14 files in build
+[debug] [2019-01-09T00:52:33.798Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-01-09T00:52:34.024Z] [hosting] hash cache [YnVpbGQ] stored for 14 files
+[debug] [2019-01-09T00:52:34.025Z] [hosting][hash queue][FINAL]
+[debug] [2019-01-09T00:52:34.026Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/a8cbaf788818ee4f:populateFiles  
+ <request body omitted>
+[debug] [2019-01-09T00:52:35.557Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:52:35.582Z] [hosting][populate queue][FINAL]
+[debug] [2019-01-09T00:52:35.585Z] [hosting] uploads queued: 6
+[info] i  hosting: uploading new files [0/6] (0%)
+[info] i  hosting: uploading new files [0/6] (0%)
+[info] i  hosting: uploading new files [5/6] (83%)
+[debug] [2019-01-09T00:52:41.740Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[heroes-1540337153226]: file upload complete
+[debug] [2019-01-09T00:52:41.765Z] [hosting] deploy completed after 8008ms
+[info] i  database: releasing rules...
+[debug] [2019-01-09T00:52:41.999Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:52:42.631Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database heroes-1540337153226 released successfully
+[debug] [2019-01-09T00:52:42.636Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "heroes-1540337153226"
+    },
+    "site": "heroes-1540337153226",
+    "version": "sites/heroes-1540337153226/versions/a8cbaf788818ee4f"
+  }
+]
+[info] i  hosting[heroes-1540337153226]: finalizing version...
+[debug] [2019-01-09T00:52:42.664Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/a8cbaf788818ee4f?updateMask=status  
+
+[debug] [2019-01-09T00:52:43.890Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:52:43.893Z] [hosting] finalized version for heroes-1540337153226:
+[info] ✔  hosting[heroes-1540337153226]: version finalized
+[info] i  hosting[heroes-1540337153226]: releasing new version...
+[debug] [2019-01-09T00:52:43.948Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/releases?version_name=sites/heroes-1540337153226/versions/a8cbaf788818ee4f  
+
+[debug] [2019-01-09T00:52:45.163Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:52:45.164Z] [hosting] release:
+[info] ✔  hosting[heroes-1540337153226]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/heroes-1540337153226/overview
+[info] Hosting URL: https://heroes-1540337153226.firebaseapp.com
+[debug] [2019-01-09T00:55:42.507Z] ----------------------------------------------------------------------
+[debug] [2019-01-09T00:55:42.514Z] Command:       /home/unix/.nvm/versions/node/v6.11.4/bin/node /home/unix/.nvm/versions/node/v6.11.4/bin/firebase --debug deploy
+[debug] [2019-01-09T00:55:42.516Z] CLI Version:   6.1.1
+[debug] [2019-01-09T00:55:42.526Z] Platform:      linux
+[debug] [2019-01-09T00:55:42.527Z] Node Version:  v6.11.4
+[debug] [2019-01-09T00:55:42.527Z] Time:          Wed Jan 09 2019 01:55:42 GMT+0100 (STD)
+[debug] [2019-01-09T00:55:42.527Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-09T00:55:42.546Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-09T00:55:42.548Z] > authorizing via signed-in user
+[debug] [2019-01-09T00:55:42.548Z] [iam] checking project heroes-1540337153226 for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-01-09T00:55:42.552Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-01-09T00:55:42.553Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-01-09T00:55:42.754Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:55:42.771Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/heroes-1540337153226:testIamPermissions  
+
+[debug] [2019-01-09T00:55:43.612Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:55:43.620Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/heroes-1540337153226  
+ 
+[debug] [2019-01-09T00:55:43.917Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'heroes-1540337153226'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-01-09T00:55:43.924Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:55:44.452Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database heroes-1540337153226 is valid
+[debug] [2019-01-09T00:55:44.460Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions  
+
+[debug] [2019-01-09T00:55:46.981Z] <<< HTTP RESPONSE 200
+[info] i  hosting[heroes-1540337153226]: beginning deploy...
+[info] i  hosting[heroes-1540337153226]: found 14 files in build
+[debug] [2019-01-09T00:55:47.026Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-01-09T00:55:47.223Z] [hosting] hash cache [YnVpbGQ] stored for 14 files
+[debug] [2019-01-09T00:55:47.224Z] [hosting][hash queue][FINAL]
+[debug] [2019-01-09T00:55:47.224Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/558281006822e392:populateFiles  
+ <request body omitted>
+[debug] [2019-01-09T00:55:48.541Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:55:48.570Z] [hosting][populate queue][FINAL]
+[debug] [2019-01-09T00:55:48.573Z] [hosting] uploads queued: 6
+[info] i  hosting: uploading new files [0/6] (0%)
+[info] i  hosting: uploading new files [0/6] (0%)
+[debug] [2019-01-09T00:55:52.837Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[heroes-1540337153226]: file upload complete
+[debug] [2019-01-09T00:55:52.838Z] [hosting] deploy completed after 5850ms
+[info] i  database: releasing rules...
+[debug] [2019-01-09T00:55:52.949Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:55:53.528Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database heroes-1540337153226 released successfully
+[debug] [2019-01-09T00:55:53.529Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "heroes-1540337153226"
+    },
+    "site": "heroes-1540337153226",
+    "version": "sites/heroes-1540337153226/versions/558281006822e392"
+  }
+]
+[info] i  hosting[heroes-1540337153226]: finalizing version...
+[debug] [2019-01-09T00:55:53.533Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/558281006822e392?updateMask=status  
+
+[debug] [2019-01-09T00:55:54.663Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:55:54.664Z] [hosting] finalized version for heroes-1540337153226:
+[info] ✔  hosting[heroes-1540337153226]: version finalized
+[info] i  hosting[heroes-1540337153226]: releasing new version...
+[debug] [2019-01-09T00:55:54.666Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/releases?version_name=sites/heroes-1540337153226/versions/558281006822e392  
+
+[debug] [2019-01-09T00:55:55.797Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:55:55.798Z] [hosting] release:
+[info] ✔  hosting[heroes-1540337153226]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/heroes-1540337153226/overview
+[info] Hosting URL: https://heroes-1540337153226.firebaseapp.com
+[debug] [2019-01-09T00:58:33.340Z] ----------------------------------------------------------------------
+[debug] [2019-01-09T00:58:33.348Z] Command:       /home/unix/.nvm/versions/node/v6.11.4/bin/node /home/unix/.nvm/versions/node/v6.11.4/bin/firebase --debug deploy
+[debug] [2019-01-09T00:58:33.350Z] CLI Version:   6.1.1
+[debug] [2019-01-09T00:58:33.350Z] Platform:      linux
+[debug] [2019-01-09T00:58:33.350Z] Node Version:  v6.11.4
+[debug] [2019-01-09T00:58:33.351Z] Time:          Wed Jan 09 2019 01:58:33 GMT+0100 (STD)
+[debug] [2019-01-09T00:58:33.352Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-09T00:58:33.375Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-09T00:58:33.375Z] > authorizing via signed-in user
+[debug] [2019-01-09T00:58:33.376Z] [iam] checking project heroes-1540337153226 for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-01-09T00:58:33.382Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/heroes-1540337153226:testIamPermissions  
+
+[debug] [2019-01-09T00:58:34.426Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:58:34.436Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/heroes-1540337153226  
+ 
+[debug] [2019-01-09T00:58:34.731Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'heroes-1540337153226'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-01-09T00:58:34.739Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:58:37.121Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database heroes-1540337153226 is valid
+[debug] [2019-01-09T00:58:37.141Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions  
+
+[debug] [2019-01-09T00:58:38.680Z] <<< HTTP RESPONSE 200
+[info] i  hosting[heroes-1540337153226]: beginning deploy...
+[info] i  hosting[heroes-1540337153226]: found 14 files in build
+[debug] [2019-01-09T00:58:38.741Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-01-09T00:58:38.917Z] [hosting] hash cache [YnVpbGQ] stored for 14 files
+[debug] [2019-01-09T00:58:38.918Z] [hosting][hash queue][FINAL]
+[debug] [2019-01-09T00:58:38.918Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/667831d066b0e677:populateFiles  
+ <request body omitted>
+[debug] [2019-01-09T00:58:40.339Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:58:40.376Z] [hosting][populate queue][FINAL]
+[debug] [2019-01-09T00:58:40.378Z] [hosting] uploads queued: 6
+[info] i  hosting: uploading new files [0/6] (0%)
+[info] i  hosting: uploading new files [0/6] (0%)
+[debug] [2019-01-09T00:58:44.173Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[heroes-1540337153226]: file upload complete
+[debug] [2019-01-09T00:58:44.175Z] [hosting] deploy completed after 5491ms
+[info] i  database: releasing rules...
+[debug] [2019-01-09T00:58:44.266Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T00:58:44.766Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database heroes-1540337153226 released successfully
+[debug] [2019-01-09T00:58:44.768Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "heroes-1540337153226"
+    },
+    "site": "heroes-1540337153226",
+    "version": "sites/heroes-1540337153226/versions/667831d066b0e677"
+  }
+]
+[info] i  hosting[heroes-1540337153226]: finalizing version...
+[debug] [2019-01-09T00:58:44.771Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/667831d066b0e677?updateMask=status  
+
+[debug] [2019-01-09T00:58:47.308Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:58:47.325Z] [hosting] finalized version for heroes-1540337153226:
+[info] ✔  hosting[heroes-1540337153226]: version finalized
+[info] i  hosting[heroes-1540337153226]: releasing new version...
+[debug] [2019-01-09T00:58:47.328Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/releases?version_name=sites/heroes-1540337153226/versions/667831d066b0e677  
+
+[debug] [2019-01-09T00:58:48.329Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T00:58:48.330Z] [hosting] release:
+[info] ✔  hosting[heroes-1540337153226]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/heroes-1540337153226/overview
+[info] Hosting URL: https://heroes-1540337153226.firebaseapp.com
+[debug] [2019-01-09T01:02:16.326Z] ----------------------------------------------------------------------
+[debug] [2019-01-09T01:02:16.333Z] Command:       /home/unix/.nvm/versions/node/v6.11.4/bin/node /home/unix/.nvm/versions/node/v6.11.4/bin/firebase --debug deploy
+[debug] [2019-01-09T01:02:16.334Z] CLI Version:   6.1.1
+[debug] [2019-01-09T01:02:16.334Z] Platform:      linux
+[debug] [2019-01-09T01:02:16.335Z] Node Version:  v6.11.4
+[debug] [2019-01-09T01:02:16.335Z] Time:          Wed Jan 09 2019 02:02:16 GMT+0100 (STD)
+[debug] [2019-01-09T01:02:16.336Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-09T01:02:16.361Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-09T01:02:16.362Z] > authorizing via signed-in user
+[debug] [2019-01-09T01:02:16.362Z] [iam] checking project heroes-1540337153226 for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-01-09T01:02:16.366Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/heroes-1540337153226:testIamPermissions  
+
+[debug] [2019-01-09T01:02:17.558Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T01:02:17.562Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/heroes-1540337153226  
+ 
+[debug] [2019-01-09T01:02:17.848Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'heroes-1540337153226'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-01-09T01:02:17.859Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T01:02:18.426Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database heroes-1540337153226 is valid
+[debug] [2019-01-09T01:02:18.430Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions  
+
+[debug] [2019-01-09T01:02:19.872Z] <<< HTTP RESPONSE 200
+[info] i  hosting[heroes-1540337153226]: beginning deploy...
+[info] i  hosting[heroes-1540337153226]: found 14 files in build
+[debug] [2019-01-09T01:02:19.930Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined
+[debug] [2019-01-09T01:02:20.179Z] [hosting] hash cache [YnVpbGQ] stored for 14 files
+[debug] [2019-01-09T01:02:20.180Z] [hosting][hash queue][FINAL]
+[debug] [2019-01-09T01:02:20.180Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/3da1e8df1c280226:populateFiles  
+ <request body omitted>
+[debug] [2019-01-09T01:02:21.539Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T01:02:21.556Z] [hosting][populate queue][FINAL]
+[debug] [2019-01-09T01:02:21.556Z] [hosting] uploads queued: 6
+[info] i  hosting: uploading new files [0/6] (0%)
+[info] i  hosting: uploading new files [0/6] (0%)
+[debug] [2019-01-09T01:02:25.266Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[heroes-1540337153226]: file upload complete
+[debug] [2019-01-09T01:02:25.270Z] [hosting] deploy completed after 5395ms
+[info] i  database: releasing rules...
+[debug] [2019-01-09T01:02:25.369Z] >>> HTTP REQUEST PUT https://heroes-1540337153226.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
+[debug] [2019-01-09T01:02:25.938Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database heroes-1540337153226 released successfully
+[debug] [2019-01-09T01:02:25.940Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "heroes-1540337153226"
+    },
+    "site": "heroes-1540337153226",
+    "version": "sites/heroes-1540337153226/versions/3da1e8df1c280226"
+  }
+]
+[info] i  hosting[heroes-1540337153226]: finalizing version...
+[debug] [2019-01-09T01:02:25.945Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/versions/3da1e8df1c280226?updateMask=status  
+
+[debug] [2019-01-09T01:02:27.025Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T01:02:27.040Z] [hosting] finalized version for heroes-1540337153226:
+[info] ✔  hosting[heroes-1540337153226]: version finalized
+[info] i  hosting[heroes-1540337153226]: releasing new version...
+[debug] [2019-01-09T01:02:27.056Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/heroes-1540337153226/releases?version_name=sites/heroes-1540337153226/versions/3da1e8df1c280226  
+
+[debug] [2019-01-09T01:02:28.082Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-09T01:02:28.084Z] [hosting] release:
+[info] ✔  hosting[heroes-1540337153226]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/heroes-1540337153226/overview
+[info] Hosting URL: https://heroes-1540337153226.firebaseapp.com

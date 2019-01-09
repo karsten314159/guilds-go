@@ -80,7 +80,7 @@ class App extends Component {
             // window.location
             // let history = window.history
             // history.replaceState(" ", "Guilds Go", "http://tinyurl.com/guildsgo")
-            document.documentElement.webkitRequestFullscreen()
+            //document.documentElement.webkitRequestFullscreen()
             updateSize()
             window.addEventListener("resize", updateSize)
             setInterval(() => this.tick(), 1000)
@@ -130,16 +130,14 @@ class App extends Component {
         let {w, h} = this.state
 
         let zoom = 17 //18
-
+        // limitBounds="true" twoFingerDrag="true" touchEvents="false"  metaWheelZoom="false"
         return (
             <div className="App">
-                <Map center={arr} zoom={zoom} width={w} height={h} metaWheelZoom="false"
-                     limitBounds="true" twoFingerDrag="true" touchEvents="false"
-                     provider={(x, y, z) => {
-                         // console.log(x + "/" + y + "/" + z)
-                         return this.state.strategy(x, y, z)
-                     }}>
-
+                <Map center={arr} zoom={zoom} width={w} height={h}
+                    /*provider={(x, y, z) => {
+                        // console.log(x + "/" + y + "/" + z)
+                        return this.state.strategy(x, y, z)
+                    }}*/>
                     <Overlay anchor={arr}>
                         <div className="ripplecontainer">
                             <a className="circle photo" href="//time2hack.com" target="_blank"></a>
