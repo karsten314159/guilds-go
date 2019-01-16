@@ -1,18 +1,34 @@
 import React, {Component} from 'react';
 import './App.css';
-import grn from './grn.json'
 import Map from "pigeon-maps"
 import Overlay from "pigeon-overlay"
+import config from "./config"
 
-class HR extends Component {
-    render() {
-        return <div style={{borderBottom: "1px solid black"}}/>
+let {weathermapapi, tomtomapi} = config
+
+function getJSON(url, callback) {
+    let xhr = new XMLHttpRequest()
+    xhr.open('GET', url, true)
+    xhr.responseType = 'json'
+    xhr.onload = function () {
+        // console.log("status", xhr.status)
+        if (xhr.status < 300) {
+            callback(xhr.response)
+        } else {
+            console.log("error", xhr.status, "body", xhr.response)
+        }
     }
+    xhr.send()
+}
+
+
+function HR() {
+    return <div style={{borderBottom: "1px solid black"}}/>
 }
 
 function MapItem(props) {
     let {x, self, inColl, arr} = props
-    return <Overlay anchor={[x.lat, x.long]}>
+    return <Overlay key={props.key} anchor={[x.lat, x.long]}>
         {self.inReach(arr, x) ? <div
                 style={{display: "flex", justifyContent: "space-between"}}
                 onClick={() => {
@@ -26,7 +42,7 @@ function MapItem(props) {
                 {self.getSymbol(x, arr, inColl, true)}
                 {inColl && <img alt="" src={x.image_uris && x.image_uris.art_crop} width={100} height={100 * (457 / 624)}/>}
             </div> :
-            self.getSymbol(x, arr, inColl, false)}
+            self.getSymbol(x, arr, inColl, true)}
     </Overlay>
 }
 
@@ -43,8 +59,9 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            zoom: 17,
             collected: [],
-            time: new Date().getTime(),
+            time: 0, // new Date().getTime(),
             strategy: function (x, y, z) {
                 // "http://c.tile.stamen.com/toner/" + z + "/" + x + "/" + y + ".png"
                 // "https://c.basemaps.cartocdn.com/rastertiles/voyager/" + z + "/" + x + "/" + y + ".png"
@@ -56,18 +73,54 @@ class App extends Component {
     tick() {
         let now = new Date().getTime()
         let last = this.state.time
-        if (now - last > 4000) {
+        if (now - last > 30000) {
             console.log("4 sec passed")
+            let self = this
             this.setState({time: now})
-            let key = "25789a3c7e539e6cf6fb2ae24a3498dc"
+
             let {latitude, longitude} = this.state.loc || {}
-            let url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + key
-            console.log(url)
+            if (!latitude) {
+                console.log("no current pos")
+            } else {
+                let url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + weathermapapi
+
+                getJSON(url, data => {
+                    console.log("we", data)
+                    let we = data.weather ? (data.weather[0] || {}) : {}
+
+                    self.setState({weather: we.main, weatherIcon: we.icon})
+                })
+
+                let keyArr = ["service", "post", "park", "restaurant", "shop", "local"]
+                for (let key2 in keyArr) {
+                    let url2 = "https://api.tomtom.com/search/2/poiSearch/" + keyArr[key2] + ".json?key=" + tomtomapi + "&lat=" + latitude + "&lon=" + longitude + "&radius=115000"
+                    getJSON(url2, data => {
+                            console.log("it", data)
+                            let it = ((data || {}).results || []).map(x => {
+                                return {
+                                    name: (x.poi || {}).name,
+                                    long: x.position.lon,
+                                    lat: x.position.lat
+                                }
+                            })
+                            self.setState({
+                                items:
+                                    (self.state.items || []).filter(x =>
+                                        it.findIndex(y => x.lat === y.lat && x.long === x.long) === -1
+                                    ).concat(it)
+                            })
+                        }
+                    )
+                    // console.log(url2)
+                }
+            }
         }
     }
 
     componentDidMount() {
         let self = this
+
+        window.scrollTo(0, 1)
 
         function updateSize() {
             self.setState({
@@ -76,38 +129,45 @@ class App extends Component {
             })
         }
 
+        updateSize()
+        window.addEventListener("resize", updateSize)
+        window.addEventListener("orientationchange", updateSize)
+
         if ("geolocation" in navigator) {
             // window.location
             // let history = window.history
             // history.replaceState(" ", "Guilds Go", "http://tinyurl.com/guildsgo")
             //document.documentElement.webkitRequestFullscreen()
-            updateSize()
-            window.addEventListener("resize", updateSize)
+
             setInterval(() => this.tick(), 1000)
-            navigator.geolocation.watchPosition(x => {
+            this.registerWatchLocation()
+        }
+    }
+
+    registerWatchLocation() {
+        navigator.geolocation.watchPosition(x => {
+            this.setState({
+                loc: {
+                    latitude: x.coords.latitude,
+                    longitude: x.coords.longitude,
+                    heading: x.coords.heading,
+                    speed: x.coords.speed
+                }
+            })
+            if (!this.state.firstPos) {
+                console.log("firstPos", x.coords)
                 this.setState({
-                    loc: {
-                        latitude: x.coords.latitude,
-                        longitude: x.coords.longitude,
-                        heading: x.coords.heading,
-                        speed: x.coords.speed
-                    }
-                })
-                if (!this.state.firstPos) {
-                    console.log("firstPos")
-                    this.setState({
-                        firstPos: true,
+                    firstPos: true /*,
                         locations: grn.data.filter(x => x.eur !== undefined).map(card => {
                             let rnd = mulberry32(card.arena_id)
                             return Object.assign({}, card, {
                                 long: x.coords.longitude + rnd() / 50 - 0.004,
                                 lat: x.coords.latitude + rnd() / 50 - 0.004
                             })
-                        })
-                    })
-                }
-            })
-        }
+                        })*/
+                })
+            }
+        })
     }
 
     inReach(arr, x) {
@@ -129,25 +189,29 @@ class App extends Component {
         // let screen = window.screen
         let {w, h} = this.state
 
-        let zoom = 17 //18
+        let zoom = this.state.zoom
         // limitBounds="true" twoFingerDrag="true" touchEvents="false"  metaWheelZoom="false"
         return (
             <div className="App">
-                <Map center={arr} zoom={zoom} width={w} height={h}
-                    /*provider={(x, y, z) => {
-                        // console.log(x + "/" + y + "/" + z)
-                        return this.state.strategy(x, y, z)
-                    }}*/>
+                <Map center={arr} zoom={zoom} width={w} height={h}>
+                    {/*provider={(x, y, z) => {
+                            // console.log(x + "/" + y + "/" + z)
+                            return this.state.strategy(x, y, z)
+                        }}*/}
                     <Overlay anchor={arr}>
                         <div className="ripplecontainer">
-                            <a className="circle photo" href="//time2hack.com" target="_blank"></a>
+                            <span className="circle photo"></span>
                             <div className="ripplecircle"></div>
                         </div>
                     </Overlay>
 
                     {(this.state.locations || []).map((x, i) => {
                         let inColl = this.state.collected.findIndex(y => y.arena_id === x.arena_id) >= 0
-                        return MapItem({key: "i" + i, inColl: inColl, x: x, self: this, arr: arr})
+                        return MapItem({key: "ca" + i, inColl: inColl, x: x, self: this, arr: arr})
+                    })}
+
+                    {(this.state.items || []).map((x, i) => {
+                        return MapItem({key: "it" + i, inColl: false, x: x, self: this, arr: arr})
                     })}
                 </Map>
                 <div style={{position: "absolute", top: 0, right: 0}}>
@@ -158,30 +222,57 @@ class App extends Component {
                              width={100}/>
                         <br/>
                     </div>*/}
-                    <div onClick={() => this.setState({info: !this.state.info})}
+                    <div onClick={() => !this.state.info && this.setState({info: !this.state.info})}
                          style={{backgroundColor: "rgba(255,255,255,0.8)", padding: 8}}>
-                        <span className="ms ms-multiple"/>
-                        <span> </span>
-                        Info
-                        <span> </span>({this.state.collected.length})
+                        <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <span className="ms ms-multiple" style={{margin: 10}}/>
+
+                            {/*<span> </span>Info<span> </span>({(this.state.items || []).length})*/}
+                            {(this.state.weather || "").toLowerCase()}
+
+                            {this.state.weatherIcon &&
+                            <img src={"http://openweathermap.org/img/w/" + this.state.weatherIcon + ".png"} alt=""
+                                 width="50" height="50" style={{margin: 10}}/>}
+                        </div>
+
                         {this.state.info &&
                         <div>
-                            <HR/>
-                            {/*JSON.stringify(Object.assign({}, this.state, {locations: (this.state.locations || []).length}))*/}
-                            Collected:
-                            <ul>
-                                {this.state.collected.map(x =>
-                                    <li key={"l" + x.arena_id}>
-                                        {this.getSymbol(x, arr, true, true)}
-                                    </li>
-                                )}
-                            </ul>
-                            <br/>
-                            Running in {this.state.w}x{this.state.h}<br/>
-                            <span>Uses: </span>
-                            <a href="https://pigeon-maps.js.org" target="_blank">pigeon maps</a>
-                            <br/><span>&nbsp;&nbsp;&nbsp;&nbsp;+ </span>
-                            <a href="http://maps.stamen.com" target="_blank">stamen watercolor</a>
+                            {HR()}
+                            <small>
+                                <a href="#" onClick={() => this.registerWatchLocation()}>
+                                    register location
+                                </a>
+                                <br/>
+                                {/*JSON.stringify(Object.assign({}, this.state, {locations: (this.state.locations || []).length}))*/}
+                                {/*Collected:
+                                <ul>
+                                    {(this.state.items || []).map(x =>
+                                        <li key={"l" + x.arena_id}>
+                                            {this.getSymbol(x, arr, true, true)}
+                                        </li>
+                                    )}
+                                </ul>*/}
+                                <br/>
+                                screen: {this.state.w}x{this.state.h}<br/>
+
+                                <span>uses: </span>
+                                <ul>
+                                    <li><a href="https://pigeon-maps.js.org" target="_blank" rel=" noopener noreferrer">pigeon
+                                        maps</a></li>
+                                    <li><a href="http://maps.stamen.com" target="_blank"
+                                           rel="noopener noreferrer">stamen-watercolor</a></li>
+
+                                    <li><a href="https://developer.tomtom.com/" target="_blank"
+                                           rel="noopener noreferrer">tomtom
+                                        poi api</a></li>
+                                    <li><a href="https://openweathermap.org/" target="_blank"
+                                           rel="noopener noreferrer">openwathermaps</a></li>
+                                </ul>
+                            </small>
+                            {HR()}
+                            <a href="#" onClick={() => this.state.info && this.setState({info: !this.state.info})}>
+                                close
+                            </a>
                         </div>}
                     </div>
                 </div>
@@ -203,7 +294,7 @@ class App extends Component {
             gu: "guild-simic"
         }
         let suf = ((x.color_identity || [])[0] + "").toString().toLowerCase()
-        if (x.color_identity.length === 2) {
+        if ((x.color_identity || []).length === 2) {
             let joined = x.color_identity.sort().join("").toLowerCase()
             //console.log(x.color_identity, joined, guilds[joined])
             suf = guilds[joined]
