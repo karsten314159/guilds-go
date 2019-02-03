@@ -190,14 +190,17 @@ class App extends Component {
         let {w, h} = this.state
 
         let zoom = this.state.zoom
+        let provider = this.state.watercolor ? {
+            provider: (x, y, z) => {
+                // console.log(x + "/" + y + "/" + z)
+                return this.state.strategy(x, y, z)
+            }
+        } : {}
         // limitBounds="true" twoFingerDrag="true" touchEvents="false"  metaWheelZoom="false"
         return (
             <div className="App">
-                <Map center={arr} zoom={zoom} width={w} height={h}>
-                    {/*provider={(x, y, z) => {
-                            // console.log(x + "/" + y + "/" + z)
-                            return this.state.strategy(x, y, z)
-                        }}*/}
+                <Map center={arr} zoom={zoom} width={w} height={h}
+                     {...provider}>
                     <Overlay anchor={arr}>
                         <div className="ripplecontainer">
                             <span className="circle photo"></span>
@@ -267,6 +270,9 @@ class App extends Component {
                                         poi api</a></li>
                                     <li><a href="https://openweathermap.org/" target="_blank"
                                            rel="noopener noreferrer">openwathermaps</a></li>
+                                    <li><a href="#"
+                                           onClick={() => this.setState({watercolor: !this.state.watercolor})}>Use Watercolor</a>
+                                    </li>
                                 </ul>
                             </small>
                             {HR()}
